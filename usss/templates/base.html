@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/base.css" %}"/>
+    <link href="https://db.onlinewebfonts.com/c/79174e198176f8e04958195dcee95e84?family=Orion+Esperanto+Dika" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="upper-header">
+
+        </div>
+        <div class="header-container">
+            <a class="logo-container" href="/">
+                <img src="{% static "img/logo.png" %}" alt="usss" title="usss">
+                <span class="">Sss</span>
+            </a>
+            <div class="navbar">
+                <a class="header-text">Products</span>
+                <a class="header-text">Stores</span>
+                <a class="header-text">Accounting</span>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

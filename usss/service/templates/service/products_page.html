@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'service/css/products_page.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="grid-container">
+        {% for product in products %}
+            <div class="card">
+                <form action="save/" method="POST"> 
+                {% csrf_token %}
+                <input name="product_id" style="display: none;" value="{{ product.id }}">
+                <div class="input-container">
+                    <label for="product_code_inp">Code</label>
+                    <input name="product_code" id="product_code_inp" type="text" value="{{ product.product_code }}">
+                </div>
+                <div class="input-container">
+                    <label for="name_inp">Name</label>
+                    <input name="name" id="name_inp" type="text" value="{{ product.name }}">
+                </div>
+                <div class="input-container">
+                    <label for="category_inp">Category</label>
+                    <input name="category" id="category_inp" type="text" value="{{ product.category }}">
+                </div>
+                <div class="input-container">
+                    <label for="is_coffe_inp">Coffee</label>
+                    <input name="is_coffee" id="is_coffe_inp" type="text" value="{{ product.is_coffee }}">
+                </div>     
+                <button class="save-btn" type="submit">Save</button>   
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
