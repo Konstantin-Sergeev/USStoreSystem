@@ -1,0 +1,47 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 320px); /* Фиксированная ширина */
+    gap: 20px;
+    justify-content: center; /* Центрирование сетки */
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background: black;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    width: 280px;
+    height: 170px;
+    box-shadow: 0 0 40px 5px rgba(255, 255, 255, .15);
+
+    .input-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 10px;
+        font-family: "Orion Esperanto Dika", cursive;
+        color: white;
+
+        input {
+            font-family: "Orion Esperanto Dika", cursive;
+            background-color: #1f1f1f;
+            border: none;
+            color: white;
+            height: 25px;
+            text-align: center;
+        }
+    }
+
+    .save-btn {
+        background-color: #1f1f1f;
+        color: white;
+        width: 30%;
+        margin-top: 10px;
+        margin-left: 35%;
+        border: 1px solid #ff9000;
+        font-family: "Orion Esperanto Dika", cursive;
+    }
+}
