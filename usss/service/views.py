@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from service.models import Stores, Products, Accounting
+from service.models import Stores, Products
 from django.http import HttpResponse
 from service.forms import ProductForm
 
