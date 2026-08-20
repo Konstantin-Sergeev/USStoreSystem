@@ -6,7 +6,7 @@
     <title>Document</title>
     {% load static %}
     <link rel="stylesheet" href="{% static "css/base.css" %}"/>
-    <link href="https://db.onlinewebfonts.com/c/79174e198176f8e04958195dcee95e84?family=Orion+Esperanto+Dika" rel="stylesheet">
+    
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -29,5 +29,7 @@
     <div class="container">
         {% block content %}{% endblock %}
     </div>
+    {% block scripts %}{% endblock %}
 </body>
 </html>
+

@@ -1,0 +1,47 @@
+.file-input {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    border: 2px solid #ff9000;
+    background-color: #1f1f1f;
+    justify-content: center;
+    align-items: center;
+}
+
+.data-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.file-input-container {
+    display: flex;
+    width: 15%;
+}
+
+.row-input-container {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+}
+
+
+.plus-icon-label {
+    display: flex;
+    height: 90px;
+    width: 90px;
+    justify-content: center;
+    align-items: center;
+}
+
+.plus-icon {
+    display: flex;
+    color: white;
+    font-size: 60px;
+    line-height: 1;
+    font-family: "Orion Esperanto Dika", cursive;
+    margin-bottom: 10px;
+    user-select: none;
+}
