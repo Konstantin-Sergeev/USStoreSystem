@@ -12,22 +12,22 @@
             <div class="card">
                 <form action="save/" method="POST"> 
                 {% csrf_token %}
-                <input state="store_id" style="display: none;" value="{{ store.id }}">
+                <input name="store_id" style="display: none;" value="{{ store.id }}">
                 <div class="input-container">
                     <label for="store_code_inp">Code</label>
-                    <input state="store_code" id="store_code_inp" type="text" value="{{ store.store_code }}">
+                    <input name="store_code" id="store_code_inp" type="text" value="{{ store.store_code }}">
                 </div>
                 <div class="input-container">
                     <label for="state_inp">State</label>
-                    <input state="state" id="state_inp" type="text" value="{{ store.state }}">
+                    <input name="state" id="state_inp" type="text" value="{{ store.state }}">
                 </div>
                 <div class="input-container">
                     <label for="market_inp">Market</label>
-                    <input state="market" id="market_inp" type="text" value="{{ store.market }}">
+                    <input name="market" id="market_inp" type="text" value="{{ store.market }}">
                 </div>
                 <div class="input-container">
                     <label for="market_size_inp">Size</label>
-                    <input state="market_size" id="market_size_inp" type="text" value="{{ store.market_size }}">
+                    <input name="market_size" id="market_size_inp" type="text" value="{{ store.market_size }}">
                 </div>     
                 <button class="save-btn" type="submit">Save</button>   
                 </form>
