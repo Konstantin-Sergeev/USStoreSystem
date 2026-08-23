@@ -1,5 +1,6 @@
 from django.db import models
-from service.models import Products, Stores
+from service.models import Products
+from store_service.models import Stores
 
 class Accounting(models.Model):
     date = models.DateTimeField(null = False, blank = False)

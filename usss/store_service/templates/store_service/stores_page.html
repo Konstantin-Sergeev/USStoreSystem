@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'service/css/products_page.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="grid-container">
+        {% for store in stores %}
+            <div class="card">
+                <form action="save/" method="POST"> 
+                {% csrf_token %}
+                <input name="store_id" style="display: none;" value="{{ store.id }}">
+                <div class="input-container">
+                    <label for="store_code_inp">Code</label>
+                    <input name="store_code" id="store_code_inp" type="text" value="{{ store.store_code }}">
+                </div>
+                <div class="input-container">
+                    <label for="state_inp">State</label>
+                    <input name="state" id="state_inp" type="text" value="{{ store.state }}">
+                </div>
+                <div class="input-container">
+                    <label for="market_inp">Market</label>
+                    <input name="market" id="market_inp" type="text" value="{{ store.market }}">
+                </div>
+                <div class="input-container">
+                    <label for="market_size_inp">Size</label>
+                    <input name="market_size" id="market_size_inp" type="text" value="{{ store.market_size }}">
+                </div>     
+                <button class="save-btn" type="submit">Save</button>   
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

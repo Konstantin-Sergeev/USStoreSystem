@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'service',
-    'accounting_service'
+    'accounting_service',
+    'store_service',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +60,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / 'templates',
                  BASE_DIR / 'service/templates',
-                 BASE_DIR / 'accounting_service/templates'],
+                 BASE_DIR / 'accounting_service/templates',
+                 BASE_DIR / 'store_service/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,7 +127,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     os.path.join(BASE_DIR, 'service/static'),
-    os.path.join(BASE_DIR, 'accounting_service/static')
+    os.path.join(BASE_DIR, 'accounting_service/static'),
+    os.path.join(BASE_DIR, 'store_service/static')
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

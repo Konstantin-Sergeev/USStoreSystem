@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from service.models import Stores, Products
+from service.models import Products
 from django.http import HttpResponse
 from service.forms import ProductForm
 
@@ -22,3 +22,4 @@ def products_page_save(request):
             print(form.errors)
 
     return redirect(products_page)
+
