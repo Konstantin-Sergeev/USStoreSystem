@@ -5,12 +5,138 @@ from accounting_service.models import Accounting
 from django.http import HttpResponse
 from accounting_service.forms import FileForm, AccountingForm
 import pandas as pd
+import plotly.express as px
+from django.db.models.functions import TruncMonth
+from django.db.models import Sum
+import plotly.graph_objects as go
+
+def get_chart():
+    # Агрегация по месяцам со всеми показателями
+    data = (
+        Accounting.objects
+        .annotate(month=TruncMonth('date'))
+        .values('month')
+        .annotate(
+            total_sales=Sum('sales'),
+            total_cogs=Sum('COGS'),
+            total_marketing=Sum('marketing_expenses'),
+            total_other=Sum('other_expenses')
+        )
+        .order_by('month')
+    )
+    
+    df = pd.DataFrame(list(data))
+    df['month_str'] = df['month'].dt.strftime('%B %Y')
+    
+    # Считаем маржу
+    df['margin'] = df['total_sales'] - df['total_cogs'] - df['total_marketing'] - df['total_other']
+    df['margin_percent'] = (df['margin'] / df['total_sales'] * 100).round(2)
+    
+    # Создаем график с двумя осями
+    fig = go.Figure()
+    
+    # 1. Колонки - продажи (основная ось)
+    fig.add_trace(go.Bar(
+        x=df['month_str'],
+        y=df['total_sales'],
+        name='Продажи',
+        marker_color='#ff9000',
+        marker_line_color='#cc7200',
+        marker_line_width=1,
+        yaxis='y',
+        opacity=0.8
+    ))
+    
+    # 2. Линия - маржа (вторая ось)
+    fig.add_trace(go.Scatter(
+        x=df['month_str'],
+        y=df['margin'],
+        name='margin',
+        mode='lines+markers',
+        line=dict(color='#00ff88', width=3),
+        marker=dict(color='#00ff88', size=10, symbol='diamond'),
+        yaxis='y2'
+    ))
+    
+    # 3. Текст с процентами на точках маржи
+    for i, row in df.iterrows():
+        fig.add_annotation(
+            x=row['month_str'],
+            y=row['margin'],
+            text=f"{row['margin_percent']}%",
+            showarrow=True,
+            arrowhead=1,
+            arrowsize=1,
+            arrowwidth=1,
+            arrowcolor='#00ff88',
+            font=dict(color='white', size=10),
+            bgcolor='rgba(0,0,0,0.6)',
+            bordercolor='#00ff88',
+            borderwidth=1,
+            borderpad=4,
+            yshift=10
+        )
+    
+    # Настройка layout с двумя осями
+    fig.update_layout(
+        title=dict(
+            text='Sales & margin by months',
+            font=dict(color='white', size=24)
+        ),
+        plot_bgcolor='#1f1f1f',
+        paper_bgcolor='#1f1f1f',
+        font_color='#e0e0e0',
+        
+        # Основная ось (продажи)
+        yaxis=dict(
+            title=dict(text='Sales', font=dict(color='#FFFFFF')),
+            tickfont=dict(color='#e0e0e0'),
+            gridcolor='#333333',
+            zerolinecolor='#444444',
+            side='left'
+        ),
+        
+        # Вторая ось (маржа)
+        yaxis2=dict(
+            title=dict(text='Маржа', font=dict(color='#00ff88')),
+            tickfont=dict(color='#e0e0e0'),
+            gridcolor='#333333',
+            zerolinecolor='#444444',
+            overlaying='y',
+            side='right'
+        ),
+        
+        # Ось X
+        xaxis=dict(
+            tickangle=45,
+            gridcolor='#333333',
+            tickfont=dict(color='#e0e0e0')
+        ),
+        
+        # Легенда
+        legend=dict(
+            font=dict(color='#e0e0e0'),
+            bgcolor='rgba(31,31,31,0.8)',
+            bordercolor='#444444',
+            borderwidth=1
+        ),
+        
+        # Отступы
+        margin=dict(l=60, r=60, t=80, b=80),
+        
+        # Ховер-режим
+        hovermode='x unified'
+    )
+
+    return fig.to_html(full_html=False)
 
 def accounting_service_page(request):
     existing_products = Products.objects.all()
     existing_stores = Stores.objects.all()
+    chart_html = get_chart()
     return render(request, template_name='accounting_service/accounting_service.html', context= {'existing_products': existing_products,
-                                                                                                 'existing_stores' : existing_stores})
+                                                                                                 'existing_stores' : existing_stores,
+                                                                                                 'chart_html': chart_html})
 
 def to_float(text) -> float:
     if text and pd.notna(text):
